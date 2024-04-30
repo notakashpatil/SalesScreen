@@ -2,18 +2,18 @@ import streamlit as st
 import pandas as pd
 import os
 
-
 def save_to_excel(data):
     filename = 'SimpleApp1.xlsx'
     if not os.path.exists(filename):
         df = pd.DataFrame(columns=data.keys())
         df.to_excel(filename, index=False)
-
+    
     df = pd.DataFrame(data)
     with pd.ExcelWriter(filename, mode='a', engine='openpyxl') as writer:
-        df.to_excel(writer, index=False, header=False, sheet_name='Sheet', startrow=writer.sheets['Sheet'].max_row,
-                    engine='openpyxl')
-
+        if 'Sheet' not in writer.book.sheetnames:
+            df.to_excel(writer, index=False, sheet_name='Sheet', engine='openpyxl')
+        else:
+            df.to_excel(writer, index=False, header=False, sheet_name='Sheet', startrow=writer.sheets['Sheet'].max_row, engine='openpyxl')
 
 def main():
     st.title("Simple Application")
@@ -56,7 +56,6 @@ def main():
         }
         save_to_excel(data)
         st.success("Data saved to SimpleApp1.xlsx")
-
 
 if __name__ == "__main__":
     main()
