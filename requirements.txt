@@ -1,0 +1,7 @@
+﻿streamlit
+pandas
+folium
+pandas
+gunicorn
+streamlit_folium
+openpyxl
