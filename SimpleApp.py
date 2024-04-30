@@ -1,4 +1,3 @@
-import streamlit as st
 import pandas as pd
 import os
 
@@ -12,8 +11,13 @@ def save_to_excel(data):
         df = pd.DataFrame()
 
     # Append the new data to the DataFrame
-    new_data = pd.DataFrame(data)
-    df = df.append(new_data, ignore_index=True)
+    if df.empty:
+        df = pd.DataFrame(data)
+    else:
+        new_data = pd.DataFrame(data)
+        # Ensure columns match before appending
+        common_columns = df.columns.intersection(new_data.columns)
+        df = pd.concat([df[common_columns], new_data[common_columns]], ignore_index=True)
 
     # Save the updated DataFrame back to the Excel file
     df.to_excel(filename, index=False)
