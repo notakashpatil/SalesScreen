@@ -38,24 +38,34 @@ def main():
     price = st.number_input("Price", min_value=0.0, step=0.01)
 
     if st.button("Submit"):
+        # Create a dictionary with the input data
         data = {
-            "Detail": [detail],
-            "Req Id": [req_id],
-            "Date": [date],
-            "Customer": [customer],
-            "Delivery loc": [delivery_loc],
-            "Sales person": [sales_person],
-            "Sales or FOC (dd)": [sales_or_foc],
-            "Invoice number": [invoice_number],
-            "Invoice date": [invoice_date],
-            "SR number": [sr_number],
-            "Part number": [part_no],
-            "Description": [description],
-            "Quantity": [qty],
-            "Price": [price]
+            "Detail": detail,
+            "Req Id": req_id,
+            "Date": date,
+            "Customer": customer,
+            "Delivery loc": delivery_loc,
+            "Sales person": sales_person,
+            "Sales or FOC (dd)": sales_or_foc,
+            "Invoice number": invoice_number,
+            "Invoice date": invoice_date,
+            "SR number": sr_number,
+            "Part number": part_no,
+            "Description": description,
+            "Quantity": qty,
+            "Price": price
         }
-        save_to_excel(data)
-        st.success("Data saved to SimpleApp1.xlsx")
+        
+        # Remove any empty or None values from the data
+        data = {key: value for key, value in data.items() if value is not None and value != ""}
+        
+        # Check if any data is present
+        if data:
+            # Call the save_to_excel function
+            save_to_excel(data)
+            st.success("Data saved to SimpleApp1.xlsx")
+        else:
+            st.warning("No data to save. Please fill in the required fields.")
 
 if __name__ == "__main__":
     main()
