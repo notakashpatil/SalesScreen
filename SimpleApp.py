@@ -3,10 +3,7 @@ import pandas as pd
 import os
 
 def save_to_excel(data):
-    # Path to the directory where the Excel file will be stored
-    excel_dir = "/path/to/your/excel/folder"
-    os.makedirs(excel_dir, exist_ok=True)
-    filename = os.path.join(excel_dir, 'SimpleApp1.xlsx')
+    filename = 'SimpleApp1.xlsx'
 
     # Load existing data from Excel file or create a new DataFrame
     try:
@@ -20,6 +17,11 @@ def save_to_excel(data):
 
     # Save the updated DataFrame back to the Excel file
     df.to_excel(filename, index=False)
+
+    # Commit and push the Excel file to GitHub
+    os.system('git add SimpleApp1.xlsx')
+    os.system('git commit -m "Update Excel file"')
+    os.system('git push origin main')
 
 def main():
     st.title("Simple Application")
