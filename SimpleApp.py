@@ -39,20 +39,20 @@ def main():
 
     if st.button("Submit"):
         data = {
-            "Detail": detail,
-            "Req Id": req_id,
-            "Date": date,
-            "Customer": customer,
-            "Delivery loc": delivery_loc,
-            "Sales person": sales_person,
-            "Sales or FOC (dd)": sales_or_foc,
-            "Invoice number": invoice_number,
-            "Invoice date": invoice_date,
-            "SR number": sr_number,
-            "Part number": part_no,
-            "Description": description,
-            "Quantity": qty,
-            "Price": price
+            "Detail": [detail],
+            "Req Id": [req_id],
+            "Date": [date],
+            "Customer": [customer],
+            "Delivery loc": [delivery_loc],
+            "Sales person": [sales_person],
+            "Sales or FOC (dd)": [sales_or_foc],
+            "Invoice number": [invoice_number],
+            "Invoice date": [invoice_date],
+            "SR number": [sr_number],
+            "Part number": [part_no],
+            "Description": [description],
+            "Quantity": [qty],
+            "Price": [price]
         }
         save_to_excel(data)
         st.success("Data saved to SimpleApp1.xlsx")
