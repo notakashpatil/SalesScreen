@@ -3,17 +3,23 @@ import pandas as pd
 import os
 
 def save_to_excel(data):
-    filename = 'SimpleApp1.xlsx'
-    if not os.path.exists(filename):
-        df = pd.DataFrame(columns=data.keys())
-        df.to_excel(filename, index=False)
-    
-    df = pd.DataFrame(data)
-    with pd.ExcelWriter(filename, mode='a', engine='openpyxl') as writer:
-        if 'Sheet' not in writer.book.sheetnames:
-            df.to_excel(writer, index=False, sheet_name='Sheet', engine='openpyxl')
-        else:
-            df.to_excel(writer, index=False, header=False, sheet_name='Sheet', startrow=writer.sheets['Sheet'].max_row, engine='openpyxl')
+    # Path to the directory where the Excel file will be stored
+    excel_dir = "/path/to/your/excel/folder"
+    os.makedirs(excel_dir, exist_ok=True)
+    filename = os.path.join(excel_dir, 'SimpleApp1.xlsx')
+
+    # Load existing data from Excel file or create a new DataFrame
+    try:
+        df = pd.read_excel(filename)
+    except FileNotFoundError:
+        df = pd.DataFrame()
+
+    # Append the new data to the DataFrame
+    new_data = pd.DataFrame(data)
+    df = df.append(new_data, ignore_index=True)
+
+    # Save the updated DataFrame back to the Excel file
+    df.to_excel(filename, index=False)
 
 def main():
     st.title("Simple Application")
@@ -58,7 +64,7 @@ def main():
         
         # Call the save_to_excel function
         save_to_excel(data)
-        st.success("Data saved to SimpleApp1.xlsx")
+        st.success("Data saved successfully")
 
 if __name__ == "__main__":
     main()
